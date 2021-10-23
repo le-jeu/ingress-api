@@ -1579,7 +1579,7 @@ Omitted some duplicates, here you can also refer to the Intel Map API
 
 	API Response:(Return only updated items)
 
-```
+```json
 {
 	"result": "1481911112158",
 	"gameBasket": {
@@ -1746,7 +1746,7 @@ The value here is also a comma separated by two hexes
 A continuationToken of null means the first time the task is viewed, after that the value is the continuationToken returned by the API itself
 
 	API Response:
-```
+```json
 {
 	"result": {
 		"missionSnippets": [{
@@ -1936,7 +1936,7 @@ A continuationToken of null means the first time the task is viewed, after that 
 		"location": value
 	}
 }
-```json
+```
 
 	API Response:
 
@@ -2011,7 +2011,7 @@ A continuationToken of null means the first time the task is viewed, after that 
 
 	API Response:
 
-```
+```json
 {
 	"result": {
 		"addedGuids": ["a4f754d8e8f0448c88a6fe349f303ebc.5", "c07c542b6e0c4fea9b66b66fcc110c37.5", "c7995bba88c4442eac1ac2c8008d419c.5", "3264136a3f414efba8e88a401786bc25.5", "4d928a839c3546658abc025fb8170981.5", "65916b9be8944fe986abe47433ad4c75.5", "0e9b7f761b8f41d8b149447dfd10ca0d.5", "995fddb948bf41caab25ad1d0496e57a.5", "36ecac7a73ba43bfb21f6d4dbdd84a1f.5", "afe79b3bd18941b995557eb0d0bcef41.5"],
@@ -2304,12 +2304,13 @@ All the parameters submitted and obtained are listed here, indicating which posi
 
 From top to bottom, left to right, in order
 
-	a
-	fb
-	gh
-	k
-	ejic
-	d
+	       a
+	f            b
+	    g     h
+	       k
+	    j     i
+	e            c
+	       d
 
 That is, the ALL command is abcd(bottom) dfa clockwise from the topmost vertex; the Strong command is ghij clockwise from the top left corner; the center is k
 
