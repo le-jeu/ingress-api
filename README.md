@@ -178,35 +178,35 @@ Invitation
 
 ## End of Part I
 
-[代码](https://github.com/lc4t/ingress-api)
+[Code](https://github.com/lc4t/ingress-api)
 
 # Game API(iOS)
 
-## 获取API
+## Get API
 
-1. 使用Charles作为中转，iPhone转发到Charles，之后转到ss
-2. 安装HTTPS证书
+1. Use Charles as a relay, iPhone forward to Charles, then to ss
+2. Install HTTPS certificate
 
-## 注意事项
+## Cautions
 
-1. 在HTTP Request Headers中，同样有X-XsrfToken
-2. 还有固定值User-Agent: Nemesis (gzip), Accept-Encoding: gzip, Accept-Language: 你自己设置的语言
-3. 还需要Authorization在HTTP Request Headers中
-4. 身份认证：
-5.
-6. 没特殊说明的，都是POST请求
-7. API用到的域名：(gstatic)|(upsight-api)|(appspot.com)|(google-analytics.com)
-8. google-analytics一会就一个，都是GET请求，在游戏过程中的这种包懒得写了
+1. In the HTTP Request Headers, there is also X-XsrfToken
+2. and fixed values User-Agent: Nemesis (gzip), Accept-Encoding: gzip, Accept-Language: the language you set yourself
+3. also need Authorization in the HTTP Request Headers
+4. Identification.
+5. 
+6. no special instructions, are POST requests
+7. API domain names used: (gstatic)|(upsight-api)|(appspot.com)|(google-analytics.com)
+8. google-analytics a moment on a, are GET requests, in the course of the game of this package lazy to write
 
-## Google数据统计
+## Google stats
 
-在此期间 User-Agent是Ingress/1.110.0 CFNetwork/808.2.16 Darwin/16.3.0
+During this period the User-Agent is Ingress/1.110.0 CFNetwork/808.2.16 Darwin/16.3.0
 
 ### Start
 
-在打开游戏时，第一个请求是发向https://www.googleadservices.com/pagead/conversion/999636601/的
+When opening the game, the first request is sent to https://www.googleadservices.com/pagead/conversion/999636601/的
 
-说下参数
+Tell us about the parameters
 
 	appversion: 1.110.0
 	auto: 1
@@ -218,15 +218,15 @@ Invitation
 	timestamp: 1457613595.596337
 	usage_tracking_enabled: 1
 
-只有timestamp是变化的
+Only timestamp is variable
 
 ### Config
 
-之后是POST请求配置文件，https://bootstrap.upsight-api.com/config/v1/f1f4c1b2962446b38f72d5a456aac73c/
+This is followed by the POST request profile, https://bootstrap.upsight-api.com/config/v1/f1f4c1b2962446b38f72d5a456aac73c/
 
-注意这里开始，Headers里带了一个X-US-Ref-Id(当向upsight-api.com请求的时候都要有，其他几个API站用X-XsrfToken), 每次启动APP值不容
+Note that starting here, the Headers carry an X-US-Ref-Id (which is required when requesting from upsight-api.com, several other API stations use X-XsrfToken), and each time you start the APP value is not allowed
 
-这个请求的内容很多，
+There are many elements to this request.
 ```json
 {
 	"sdk.version": "4.0.2",
@@ -275,11 +275,12 @@ Invitation
 		}],
 		"past_session_time": 2873649
 	}]
-}```
+}
+```
 
-可以看到这里实际上是上传了session的备份，设备信息，APP信息
+You can see here is actually uploading the session backup, device information, APP information
 
-会返回一个配置
+will return a configuration
 
 ```json
 {
@@ -403,15 +404,13 @@ Invitation
 }
 ```
 
-这里就不细说了
+I won't go into details here
 
 
 
 ### batch
 
-这个是POST给https://batch.upsight-api.com/batch/v1/f1f4c1b2962446b38f72d5a456aac73c/
-
-
+This is POST to https://batch.upsight-api.com/batch/v1/f1f4c1b2962446b38f72d5a456aac73c/
 
 ```json
 {
@@ -495,9 +494,9 @@ Invitation
 	}]
 }
 ```
-和上面的差别在于event， 有兴趣的diff一下
+The difference with the above is the event, if you are interested in diff
 
-返回什么呢：
+What to return.
 
 ```json
 {
@@ -507,11 +506,11 @@ Invitation
 }
 ```
 
-### OAuth2登录
+### OAuth2 Login
 
-这里是OAuth2的认证，不是重点，都略去
+Here is the OAuth2 authentication, not the focus, are omitted
 
-最后一个API是POST到https://www.googleapis.com/oauth2/v4/token，**form**包含了
+The last API is POST to https://www.googleapis.com/oauth2/v4/token, **form** contains
 
 	client_id
 	code
@@ -519,7 +518,8 @@ Invitation
 	redirect_uri
 	verifier
 
-然后仍然是返回一个JSON，
+then still returns a JSON that
+
 ```json
 {
 	"access_token": *,
@@ -530,18 +530,17 @@ Invitation
 }
 ```
 
-**从这里之后就要带上Authorizatoin了** （向appspot请求时）
+**Authorizatoin is required from here on** (when requesting from appspot)
 
-其格式就是 `Bearer access_token`
+The format is `Bearer access_token`
 
 #### collect
 
-之后，ingress会发送一个统计信息，GET传参到`https://ssl.google-analytics.com/collect`
+After that, ingress will send a statistic message, GET passing a reference to `https://ssl.google-analytics.com/collect`
 
-这里的User-Agent被设置为`GoogleAnalytics/3.10 (iPhone; U; CPU iPhone OS 10.2 like Mac OS X; zh-hans-cn-cn)`
+Here the User-Agent is set to `GoogleAnalytics/3.10 (iPhone; U; CPU iPhone OS 10.2 like Mac OS X; zh-hans-cn-cn)`
 
-下面说一下参数
-
+Here are the parameters
 
 	an: niantic-ingress
 	av: 1.110.0
@@ -567,7 +566,7 @@ Invitation
 
 URL: https://m-dot-betaspike.appspot.com/handshake
 
-这里仍然是POST form提交，但是内容是JSON的，怀疑是设置错了
+Here is still a POST form submission, but the content is JSON, suspected that the wrong settings
 
 ```json
 {
@@ -578,9 +577,10 @@ URL: https://m-dot-betaspike.appspot.com/handshake
 }
 ```
 
-返回的东西很重要
-首先是一个crack串`)]}'`
-然后是一个巨大的JSON，返回了：
+What is returned is important
+First is a crack string `)]}'`
+Then there is a huge JSON that returns.
+
 ```json
 {
     "result": {
@@ -1132,34 +1132,34 @@ URL: https://m-dot-betaspike.appspot.com/handshake
 }
 ```
 
-这里的东西可以做一个教程了，基本上，各种物品的效果，升级的要求都在里面写的很清楚，欢迎其他同学做个统计
+Here's something you can do a tutorial, basically, the effect of various items, upgrade requirements are written very clearly in it, other students are welcome to do a statistic
 
-比如ultraStrikeDamageRangeMap里说明了各个级别的US作用距离
+For example, the ultraStrikeDamageRangeMap illustrates the US action distance for each level
 
-这里大概是为了热更新，把设置放在服务端（反正跑的又不是我的流量，gg）
+Here is probably for hot updates, put the settings on the server side (running not my traffic anyway, gg)
 
 
 
 ### setLocale
 
-然后是POST到https://m-dot-betaspike.appspot.com/rpc/emptyBasket/setLocale
+Then it's POST to https://m-dot-betaspike.appspot.com/rpc/emptyBasket/setLocale
 
-直接form内容简单暴力
+Direct form content is simple and violent
 
 	{"params":["zh-Hans-CN"]}
 
-返回也是一个空的{}
+The return is also an empty{}
 
 ### globalRegionMap
 
-这次是GET到https://m-dot-betaspike.appspot.com/globalRegionMap获取游戏开始那张转动的地球的图
+This time it is GET to https://m-dot-betaspike.appspot.com/globalRegionMap to get the map of the spinning earth at the beginning of the game
 
-Response是一张256*128的黑绿红图
+Response is a 256*128 black, green and red chart
 
 
-### batch 第二次
+### batch Second time
 
-又触发一次设备信息上传，除了request_ts更新了，有一点不同，在events中
+Another device information upload is triggered, except request_ts is updated with a little difference in events
 
 ```json
 "pub_data": {
@@ -1172,14 +1172,14 @@ Response是一张256*128的黑绿红图
 
 
 
-这之前都是在点击`我明白了`按钮之前的请求
+This was all before clicking the `I got it` button on the request
 
 
 ## Game API
 
 ### getGameScore
 
-显然是用来获取游戏的比分的
+Apparently it is used to get the score of the game
 
 	API URL: https://m-dot-betaspike.appspot.com/rpc/playerUndecorated/getGameScore
 	API Request: params: []
@@ -1199,22 +1199,22 @@ Response是一张256*128的黑绿红图
 }
 ```
 
-懒得解释了，直接贴返回的包吧
+I'm too lazy to explain, just post the returned package
 
 ## getObjectsInCells
 
-用来获得地图元素
+Used to obtain map elements
 
 	API URL： https://m-dot-betaspike.appspot.com/rpc/gameplay/getObjectsInCells
 	API Request: params: {clientBasket: {clientBlob}, knobSyncTimestamp, energyGlobGuids: [], playerLocation: value, dates: [value], cellsAsHex: [...], cells}
 
-这里clientBasket是验证信息，整个过程中不会变，大概要逆一下知道算法
+Here clientBasket is the verification information, the whole process will not change, probably to reverse the algorithm to know
 
-playerLocation是'hex,hex'这样的串，纬度经度(保留6位小数后去掉小数点)转成16进制后空格连接
+playerLocation is a string like 'hex,hex', latitude and longitude (keep 6 decimal places and remove the decimal point) are converted to hexadecimal and then concatenated with spaces
 
-dates是20个0组成的list（不确定）
+dates is a list of 20 zeros (not sure)
 
-cellsAsHex是cell分片的token，20个16位hex值组成的list
+cellsAsHex is the token of the cell slice, a list of 20 16-bit hex values
 
 
 	API Response:
@@ -1463,13 +1463,13 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 }
 ```
 
-很清楚。。。不说了
+Very clear. No more.
 
 ### getCurrentMission
 
 	API URL: https://m-dot-betaspike.appspot.com/rpc/gameplay/getCurrentMission
 	API Request: params: {clientBasket: {clientBlob}, knobSyncTimestamp, energyGlobGuids: [], playerLocation: value}
-	API Response: 任务和gameBasket，这里因为我没当前任务，略掉
+	API Response: Task and gameBasket, here because I do not have the current task, omitted
 
 
 ### getNewsOfTheDay
@@ -1478,16 +1478,16 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 	API URL:https://m-dot-betaspike.appspot.com/rpc/playerUndecorated/getNewsOfTheDay
 	API Request: params: [value]
 
-这个value是一个不造什么鬼的串
+This value is a string that doesn't create any ghosts
 
 	API Response:  gameBasket: {gameEntities: [], inventory: [], deletedEntityGuids: [] }
 
 
-这个API得等有活动的时候测试
+This API has to be tested when there is an event
 
 ### getPaginatedPlexts
 
-获得comm消息
+Get comm messages
 
 
 	API URL: https://m-dot-betaspike.appspot.com/rpc/gameplay/getPaginatedPlexts
@@ -1513,7 +1513,7 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 }
 ```
 
-这个的参数可以参考Intel Map的
+The parameters for this can be found in the Intel Map
 
 	API Response:
 
@@ -1562,7 +1562,7 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 }
 ```
 
-省略了一些重复的，这里也可以参考Intel Map的API
+Omitted some duplicates, here you can also refer to the Intel Map API
 
 
 ### getInventory
@@ -1577,7 +1577,7 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 }
 ```
 
-	API Response:(只返回更新的物品)
+	API Response:(Return only updated items)
 
 ```
 {
@@ -1609,7 +1609,7 @@ cellsAsHex是cell分片的token，20个16位hex值组成的list
 	}
 }
 ```
-inventory能看到更新的物品是什么，强制同步后，这个里面就是所有东西，非常大。。（毕竟每个物品一个list...）
+The inventory can see what the updated items are, after the forced synchronization, this inside is everything, very large. (After all, each item a list ...)
 
 ### registerForApn
 
@@ -1617,7 +1617,7 @@ inventory能看到更新的物品是什么，强制同步后，这个里面就�
 	API Request: params: [key, "com.google.ingress", "2048"]
 	API Response: {}
 
-用来注册token
+Used to register token
 
 
 ### unregisterForApn
@@ -1655,14 +1655,14 @@ inventory能看到更新的物品是什么，强制同步后，这个里面就�
 
 
 
-这个API不错，能看到自己邀请的所有人和状态，甚至是ACCEPTED_ANOTHER_PLAYERS_INVITE
+This API is good, you can see all the people you invite and their status, even ACCEPTED_ANOTHER_PLAYERS_INVITE
 
 ### putBulkPlayerStorage
 
 	API URL:https://m-dot-betaspike.appspot.com/rpc/playerUndecorated/putBulkPlayerStorage
 	API Request: prams: [{tutorial_complete_scanner_intro: value}]
 
-这个value是一个`true:delim:1481912306360:delim:true`格式的串
+This value is a string in the format `true:delim:1481912306360:delim:true`
 
 	API Response:
 ```json
@@ -1679,19 +1679,19 @@ inventory能看到更新的物品是什么，强制同步后，这个里面就�
 
 ### getPlayerProfile2
 
-这个是用来获取自己的信息的
+This is used to get information about yourself
 
 	API URL: https://m-dot-betaspike.appspot.com/rpc/playerUndecorated/getPlayerProfile2
 	API Request: params: [agent_name]
 	API Response: result: {team, avatar: {foregroundLayer: {id, imageURL, layer}, backgroundLayer: {id, imageUrl, layer}, avatarColorForeground, avatarColorBackground}, metrics: [{metricName, metricCategory, formattedValueAllTime, formattedValue30Days, formattedValue7Days}, ...], highlightedAchievements: [title, description, group, tiers: [{value, badgeImageUrl, locked}, ...], timestampAwarded], firstAchievementContinuationToken, ap, verifiedLeve, achievementCounts: {SILVER, GOLD, BLACK, PLATINUM, BRONZE}, gPlusId, highlightedMissionBadges: [{missionGuid, missionTitle, missionDescription, imageUrl}, ...], firstMissionBadgeContinuationToken}, gameBasket: {gameEntities, inventory, deletedEntityGuids}
 
-都是自注释
+All are self-annotated
 
-metrics是数据统计，例如Unique Portals Visite
+Metrics are statistics, such as Unique Portals Visite
 
-highlightedAchievements是牌子信息
+highlightedAchievements is the tile information
 
-highlightedMissionBadges是任务信息
+highlightedMissionBadges is the mission information
 
 
 ### getPaginatedMissionBadges
@@ -1699,7 +1699,7 @@ highlightedMissionBadges是任务信息
 	API URL: https://m-dot-betaspike.appspot.com/rpc/playerUndecorated/getPaginatedMissionBadges
 	API Request: params: [{continuationToken, nickname}]
 
-这个continuationToken是上面那个API返回的firstMissionBadgeContinuationToken或者是自己返回的continuationToken
+The continuationToken is the firstMissionBadgeContinuationToken returned by the API above or the continuationToken returned by yourself
 
 	API Response:
 ```json
@@ -1721,7 +1721,7 @@ highlightedMissionBadges是任务信息
 }
 ```
 
-这个API是用来获取任务图标和详情的
+This API is used to get task icons and details
 
 ### getNearbyMissions
 
@@ -1741,9 +1741,9 @@ highlightedMissionBadges是任务信息
 }
 ```
 
-这里的value也是逗号分隔的两个hex
+The value here is also a comma separated by two hexes
 
-continueationToken为null表示第一次查看任务，之后值为这个API自己返回的continuationToken
+A continuationToken of null means the first time the task is viewed, after that the value is the continuationToken returned by the API itself
 
 	API Response:
 ```
@@ -2300,9 +2300,9 @@ continueationToken为null表示第一次查看任务，之后值为这个API自�
 }
 ```
 
-这里把所有提交和得到的参数都列明了，说明一下画图的字母代表哪个位置：
+All the parameters submitted and obtained are listed here, indicating which position is represented by the letters of the drawing.
 
-从上到下，从左到右依次是
+From top to bottom, left to right, in order
 
 	a
 	fb
@@ -2311,11 +2311,11 @@ continueationToken为null表示第一次查看任务，之后值为这个API自�
 	ejic
 	d
 
-也就是 ALL命令从最上方顶点顺时针依次是abcd(最下面)dfa; Strong命令从左上角开始顺时针ghij;中心是k
+That is, the ALL command is abcd(bottom) dfa clockwise from the topmost vertex; the Strong command is ghij clockwise from the top left corner; the center is k
 
-#结语
+# Concluding remarks
 
-	用了两个晚上统计了下API。
-	本来打算也写一份Game API的库，但是因为不能生成客户端blob并没有意义，以后用到再说，Intel Map已经ok了。
-	在游戏过程中，batch会在移动的时候触发
-	获取地图更新是定时轮询:getInventory（毕竟还可以passcode获取物品，所有得一直get）,getPaginatedPlexts,getObjectsInCells
+	Used two nights to count the API.
+	Originally intended to also write a Game API library, but because it can not generate client-side blob and does not make sense to use later, Intel Map has been OK.
+	In the course of the game, batch will be triggered when moving
+	Get map updates are timed polling: getInventory (after all, you can also passcode to get items, all have to keep getting), getPaginatedPlexts, getObjectsInCells
